@@ -12,5 +12,6 @@ In a first step the sequences are ordered according to their V9 subsequence, and
 In a second part, the full sequences (V9 plus ITS1) of this ordered abundance table are transformed and stored in the fasta Format.
 The fasta-formatted file can be read by several alignment programs allowing for manual assessment of the sequence data within the ITS1: the variation within the ITS1 is clearly visible by alignment.
 
-In the third and last step, OTU´s with identical V9 are clustered, i.e. the abundances are summed up by aggregation. The corresponding smaller table is stored - the resulting table is smaller (less OTUs) than the original one - usually by a factor of 2. Within the result table, there is some additional information within the first columns like: 
+In the third and last step, OTU´s with identical V9 are clustered, i.e. the abundances are summed up by aggregation. Of course, there is the need to choose one representative sequence for each V9 group; normally, this is the most frequent sequence - which is reasonable in most cases (default). Alternatively, the representative with the longest V9+ITS1 chain, i.e. sequence length can be selected. 
+In any case, the resulting table is stored to a file - it is of course always smaller (less OTUs) than the original one - usually by a factor of 2. Within the result table, there is some additional information within the first columns like: 
 V9 group: 1....n, plus the number of variants within each group.
