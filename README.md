@@ -1,4 +1,6 @@
-# V9-cluster
+# V9-cluster : V9_Clust.R 
+Version 2.3 (new: you can choose: writing results in German_Excel format (default) or in English Excel format [German_Excel<-F])
+
 R-Script for modifying DNA-sequence-abundance tables: clustering of related sequences (e.g. SSU-ITS1) according to 100% identical sub-sequences; e.g. 150 BP of V9-SSU;
 
 in our studies we use primers that include the V9 subregion of the SSU-ribosomal DNA plus the directly following ITS1-region;
