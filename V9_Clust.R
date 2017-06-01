@@ -1,6 +1,6 @@
 # script for V9 aggregation of abundance dataframes; best: following swarm_reform.R
 # author: Manfred Jensen, Biodiversity group, Universität Duisburg-Essen, Germany
-# V2.2  May 10, 2017   email: manfred.jensen@uni-due.de
+# V2.3  June 1, 2017   email: manfred.jensen@uni-due.de
 # tested length of V9 = 120-165 BP, requested length can be modified in variable v9_end
 # op_sys windows or linux, working directory can be modified; here: data in M:/
 
@@ -17,14 +17,15 @@ filenamein <- "JAU-1_Tablesum_swo_small"
 filenameout <- paste(filenamein,"_agg.csv",sep="")
 filenamesorted <- paste(filenamein,"_sort.csv",sep="")
 filenamefasta <- paste(filenamein,"_sort.fasta",sep="")
-v9_end <- 150
+v9_end        <- 150
+German_Excel  <- T
 take_longSeqs <- F    # TRUE for longest instead of most frequent sequences to survive
 wdir <- "jensen/rstudio/europa"
 # end chunk2 varaibels
 
 
 # chunk3 data.entry etc , linux: path to be modified
-data.entry(op_sys,wdir)
+data.entry(op_sys,wdir,German_Excel)
 data.entry(filenamein,v9_end,take_longSeqs)
 filenameout    <- paste(filenamein,"_agg.csv",sep="")
 filenamesorted <- paste(filenamein,"_sort.csv",sep="")
@@ -65,7 +66,9 @@ seqid <- paste("N",rownames(spe_sorted),sep="")
 spe_sorted <- cbind(seqid,v9group,readsums,seqs,spe_sorted)
 cat("writing  SSU_V9-sorted file\n")
 filenamesorted <- paste(filenamein,"_v9sort",v9_end,".csv",sep="")
-fwrite(spe_sorted, file=filenamesorted,sep=";",dec=",")
+
+if (German_Excel) fwrite(spe_sorted, file=filenamesorted,sep=";",dec=",") else
+                  fwrite(spe_sorted, file=filenamesorted,sep="\t",dec=".")
 # end chunk5: preparing and writing sorted file
 # ***************************************************************************************
 
@@ -73,8 +76,8 @@ fwrite(spe_sorted, file=filenamesorted,sep=";",dec=",")
 
 # chunk 6: prepare fasta file from v9 sorted file
 # ******************************************************************************************
-seq1 <- spe_sorted$seqs  # retain seq values, prepare fasta file with seq1
-seq1=as.list(t(seq1))    # structure needed to write fasta file
+seq1  <- spe_sorted$seqs  # retain seq values, prepare fasta file with seq1
+seq1  <- as.list(t(seq1))    # structure needed to write fasta file
 seqid <- paste(spe_sorted$seqid,"_",v9group,sep="")         # integrate group info in seqid
 filenamefasta <- paste(filenamein,"_v9sort",v9_end,".fasta",sep="")    # new name
 cat("writing  SSU_V9-sorted fasta file\n")                    # info
@@ -117,7 +120,8 @@ spe_strs_subs <- cbind(seqid,v9group,n_variants,readsums,seqlength,seqs,spenew)
 if (take_longSeqs) filenameaggv9 <- paste(filenamein,"_v9agglongest",v9_end,".csv",sep="") else
          filenameaggv9 <- paste(filenamein,"_v9agg",v9_end,".csv",sep="")  # new name
 cat("writing  SSU_V9-aggregated file: ",filenameaggv9,"\n")                # info
-fwrite(spe_strs_subs,file=filenameaggv9,sep=";",dec=",")
+if (German_Excel) fwrite(spe_strs_subs,file=filenameaggv9,sep=";",dec=",") else
+                  fwrite(spe_strs_subs,file=filenameaggv9,sep="\t",dec=".")
 T3 <- Sys.time()
 cat("Time elapsed (total ): ",T3-T1,"\n")
 # end chunk8************************************************************************************
